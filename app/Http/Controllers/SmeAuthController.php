@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 
 use Illuminate\Http\Request;
-use Hash;
-use Illuminate\Contracts\Session\Session as SessionSession;
+use Illuminate\Support\Facades\Hash;
+// use Illuminate\Contracts\Session\Session as SessionSession;
 use Session;
+
 
 class SmeAuthController extends Controller
 {
@@ -27,8 +28,8 @@ class SmeAuthController extends Controller
             'phone' => 'required',
             'matricule' => 'required|unique:students|min:7|max:7',
             'dob' => 'required',
-            'password' => 'required|min:8|max:8',
-            'cpassword' => 'required|min:8|max:8'
+            'password' => 'required|min:6',
+            'cpassword' => 'required|min:6'
         ]);
 
         $student = new Student();
@@ -38,18 +39,17 @@ class SmeAuthController extends Controller
         $student->phone = $request->phone;
         $student->matricule = $request->matricule;
         $student->dob = $request->dob;
-        $student->password = $request->password;
-        $student->cpassword = $request->cpassword;
+        $student->password = Hash::make($request->password);
+        $student->cpassword = Hash::make($request->cpassword);
+        // $student->password = $request->password;
+        // $student->cpassword = $request->cpassword;
 
 
         $res = $student->save();
         if($res){
-            if($student->password === $student->cpassword){
-                return back()->with('success', 'you have registered');
-            }else{
-                return back()->with('fail', 'passwords do not match');
-            }
-        }else{
+            return redirect('login');
+        }
+        else{
             return back()->with('fail', 'something went wrong');
         }
     }
@@ -60,26 +60,32 @@ class SmeAuthController extends Controller
             'password' => 'required',
         ]);
 
-        $stud_matricule = Student::where('matricule', '=', $request->matricule)->first();
-        if($stud_matricule){
-            if($stud_matricule->password === $request->password){
-                $request->session()->put('loginID', $stud_matricule->id);
+        $student_mat = Student::where('matricule','=', $request->matricule)->first();
+        if($student_mat){
+            if(Hash::check($request->password, $student_mat->password)){
+                $request->session()->put('loginId', $student_mat->id);
                 return redirect('dashboard');
             }else{
-                return back()->with('fail', 'You password do not match');
+                return back()->with('fail', 'password do not match');
             }
         }else{
-            return back()->with('fail', 'Oops this matricule does not exist!');
+            return back()->with('fail', 'matricule does not exist');
         }
     }
 
     public function dashboard(){
-        return "Welcome to your SWELearn dashboard";
-        // $data = array();
-        // if(Session::has('loginID')){
-        //     $data = Student::where('matricule', '=', Session::get('loginID'))->first();
-        // }
-        // // pass in data using compact()
-        // return view('dashboard', compact('data'));
+        // return "Welcome to your SWELearn dashboard";
+        $data = array();
+        if (Session()->has('loginId')) {
+            $data = Student::where('id','=', Session()->get('loginId'))->first();
+        }
+        return view('dashboard', compact('data'));
+    }
+
+    public function logout(){
+        if (Session()->has('loginId')){
+            Session()->pull('loginId');
+            return redirect('login');
+        }
     }
 }

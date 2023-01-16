@@ -26,7 +26,8 @@
 
                     <div class="content_form">
                         <div class="y_style">
-                            <form action="{{ route('register_student') }}" method="POST">
+                            <form onsubmit="return checkPassword()" action="{{ route('register_student') }}" method="POST">
+                            {{-- <form onsubmit="return checkPassword()" action=""> --}}
 
                                 @if(Session::has('success'))
                                 <span class="success">{{ Session::get('success') }}</span>
@@ -39,45 +40,47 @@
                                 @csrf
                                 <p>
                                     <label>Full name</label>
-                                    <input class="item" type="text" placeholder="Enter Fullname" name="fullname" id="" value="{{ old('fullname') }}">
+                                    <input class="item" type="text" placeholder="Enter Fullname" name="fullname" value="{{ old('fullname') }}">
                                     <span class="error">@error('fullname') {{ $message }} @enderror</span>
                                 </p>
 
                                 <p>
                                     <label>Email</label>
-                                    <input class="item" type="email" placeholder="Enter Email" name="email" id="" value="{{ old('email') }}">
+                                    <input class="item" type="email" placeholder="Enter Email" name="email" value="{{ old('email') }}">
                                     <span class="error">@error('email') {{ $message }} @enderror</span>
                                 </p>
 
                                 <p>
                                     <label>Phone Number</label>
-                                    <input class="item" type="number" placeholder="Enter Phone number" name="phone" id="" value="{{ old('phone') }}">
+                                    <input class="item" type="number" placeholder="Enter Phone number" name="phone" value="{{ old('phone') }}">
                                     <span class="error">@error('phone') {{ $message }} @enderror</span>
                                 </p>
 
                                 <p>
                                     <label>Matricule</label>
-                                    <input class="item" type="text" placeholder="Enter Matricule" name="matricule" id="" value="{{ old('matricule') }}">
+                                    <input class="item" type="text" placeholder="Enter Matricule" name="matricule" value="{{ old('matricule') }}">
                                     <span class="error">@error('matricule') {{ $message }} @enderror</span>
                                 </p>
 
                                 <p>
                                     <label>Date Of Birth</label>
-                                    <input class="item" type="date" placeholder="Enter Date of birth" name="dob" id="" value="{{ old('dob') }}">
+                                    <input class="item" type="date" placeholder="Enter Date of birth" name="dob" value="{{ old('dob') }}">
                                     <span class="error">@error('dob') {{ $message }} @enderror</span>
                                 </p>
 
                                 <p>
-                                    <label>Password</label>
-                                    <input class="item" type="password" placeholder="Enter Password" name="password" id="">
+                                    <label for="password">Password</label>
+                                    <input class="item" type="password" placeholder="Enter Password" name="password" id="password">
                                     <span class="error">@error('password') {{ $message }} @enderror</span>
                                 </p>
 
                                 <p>
-                                    <label>Confirm Password</label>
-                                    <input class="item" type="password" placeholder="Confirm Password" name="cpassword" id="">
+                                    <label for="cpassword">Confirm Password</label>
+                                    <input class="item" type="password" placeholder="Confirm Password" name="cpassword" id="cpassword">
                                     <span class="error">@error('cpassword') {{ $message }} @enderror</span>
                                 </p>
+
+                                <span id="message" class="message"></span>
 
                                 <p class="check">
                                     <input class="item" type="checkbox" id="term">

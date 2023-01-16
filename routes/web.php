@@ -18,13 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [SmeAuthController::class, 'login']);
+Route::get('/login', [SmeAuthController::class, 'login'])->middleware('alreadyLoggedIn');
 
-Route::get('/register', [SmeAuthController::class, 'registration']);
+Route::get('/register', [SmeAuthController::class, 'registration'])->middleware('alreadyLoggedIn');
 
 // send informations to database
 Route::post('/register-student', [SmeAuthController::class, 'registerStudent'])->name('register_student');
 Route::post('/login-user', [SmeAuthController::class, 'loginStudent'])->name('login_user');
 
 // dashoard link
-Route::get('/dashboard', [SmeAuthController::class, 'dashboard']);
+Route::get('/dashboard', [SmeAuthController::class, 'dashboard'])->middleware('isLoggedIn');
+Route::get('/logout', [SmeAuthController::class, 'logout']);

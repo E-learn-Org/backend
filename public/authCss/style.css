@@ -182,6 +182,11 @@ form :is(p, label) a:hover, .after_form a:hover{
     margin-top: 20px;
 }
 
+span.message{
+    color: var(--red-color);
+    display: inline-block;
+}
+
 
 
 

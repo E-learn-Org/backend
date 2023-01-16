@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2>Welcome to your dashboard</h2>
-    {{-- <table>
+    <table>
         <thead>
             <th>Name</th>
             <th>Matricule</th>
@@ -16,9 +16,10 @@
 
         <tbody>
             <td>{{ $data->fullname }}</td>
-            <td>{{ $data->email }}</td>
+            <td>{{ $data->matricule }}</td>
             <td><a href="logout">Logout</a></td>
         </tbody>
-    </table> --}}
+    </table>
+    <h2>hello</h2>
 </body>
 </html>
