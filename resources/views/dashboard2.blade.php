@@ -59,7 +59,7 @@
                         <h3>Setting</h3>
                     </a>
 
-                    <a href="logout">
+                    <a href="#">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <h3>Logout</h3>
                     </a>
@@ -224,7 +224,7 @@
 
                     <div class="profile">
                         <div class="info">
-                            <p>Holla, <b>{{ $data->fullname }}</b></p>
+                            <p>Holla, <b>Chi Samuel</b></p>
                         </div>
                     </div>
 

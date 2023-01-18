@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Specialty;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,9 @@ class SmeAuthController extends Controller
     }
 
     public function registration(){
-        return view("auth.registration");
+        // $data1 = array();
+        $data1 = Specialty::all();
+        return view('auth.registration', compact('data1'));
     }
 
     public function registerStudent(Request $request){
@@ -29,7 +32,8 @@ class SmeAuthController extends Controller
             'matricule' => 'required|unique:students|min:7|max:7',
             'dob' => 'required',
             'password' => 'required|min:6',
-            'cpassword' => 'required|min:6'
+            'cpassword' => 'required|min:6',
+            'specialty_id' => 'required'
         ]);
 
         $student = new Student();
@@ -41,6 +45,8 @@ class SmeAuthController extends Controller
         $student->dob = $request->dob;
         $student->password = Hash::make($request->password);
         $student->cpassword = Hash::make($request->cpassword);
+        $student->specialty_id = $request->specialty_id;
+        // $student->specialty_id = $request->specialty_id;
         // $student->password = $request->password;
         // $student->cpassword = $request->cpassword;
 
@@ -73,6 +79,12 @@ class SmeAuthController extends Controller
         }
     }
 
+    // public function selectSpecialty(){
+    //     $data1 = array();
+    //     $data1 = Specialty::all('id');
+    //     return view('auth.registration', compact('data'));
+    // }
+
     public function dashboard(){
         // return "Welcome to your SWELearn dashboard";
         $data = array();
@@ -88,4 +100,9 @@ class SmeAuthController extends Controller
             return redirect('login');
         }
     }
+
+    public function dashboard2(){
+        return view('dashboard2');
+    }
+
 }

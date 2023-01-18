@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Register User</title>
     <link rel="stylesheet" href="{{ asset('authCss/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('authCss/style1.css') }}">
 </head>
 <body>
     <div id="page" class="site">
@@ -23,6 +24,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <div class="content_form">
                         <div class="y_style">
@@ -82,6 +84,26 @@
 
                                 <span id="message" class="message"></span>
 
+                                <p>
+                                    <label>Specialty</label>
+                                    {{-- <div class="dropdown"> --}}
+                                        {{-- <input type="text" class="textBox" placeholder="Select Specialty" value="{{ old('specialty_id') }}" name="specialty_id"> --}}
+                                        <select name="specialty_id">
+                                            <?php for ($i=0; $i < count($data1) ; $i++) {?>
+                                                <option value="<?php echo $data1[$i]->id; ?>">{{ $data1[$i]->specialty }}</option>
+                                            <?php } ?>
+                                        </select>
+                                        {{-- <div class="option"> --}}
+                                            {{-- var_dump($data1); --}}
+
+
+                                            {{-- <div>Network</div>
+                                            <div>Security</div> --}}
+                                        {{-- </div> --}}
+                                    {{-- </div> --}}
+                                    <span class="error">@error('specialty_id') {{ $message }} @enderror</span>
+                                </p>
+
                                 <p class="check">
                                     <input class="item" type="checkbox" id="term">
                                     <label for="term">I agree to all the <a href="#">terms and conditions</a> </label>
@@ -106,3 +128,4 @@
     <script src="{{ asset('authJs/script.js') }}"></script>
 </body>
 </html>
+
